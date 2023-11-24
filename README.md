@@ -1,61 +1,68 @@
-# Warehouse
-Hi there. It's my MSSQL Project 
+# Warehouse Database
 
-Database Overview:
+## Overview
+The Warehouse Database, named "Warehouse," manages information related to persons, contracts, cultures, warehouses, and orders.
 
-The database is named "Warehouse."
-Tables:
+## Tables
 
-Persons:
+### Persons
+- Employee information including ID, Company, Name, Surname, and Cellphone.
 
-Contains information about employees.
-Columns: [Id] (primary key), [Company], [Name], [Surname], [Cellphone].
-Contracts:
+### Contracts
+- Contract details with ID, Number, Start Date, End Date, Quantity, and Price.
 
-Contains information about contracts.
-Columns: [Id] (primary key), [Number], [Begin], [End], [Quantity], [Price].
-Cultures:
+### Cultures
+- Information about cultures, including ID, Culture Name, Price, and Quantity.
 
-Contains information about cultures.
-Columns: [Id] (primary key), [Culture], [Price], [Quantity].
-Warehouses:
+### Warehouses
+- Details about warehouses, including ID, Warehouse Name, Free space, Occupied space, and Available space.
 
-Contains information about warehouses.
-Columns: [Id] (primary key), [Warehouse], [Free], [Occupied], [Available].
-F_Contracts:
+### F_Contracts
+- Relationships between contracts, persons, and cultures, identified by ID, Contract ID, Person ID, and Culture ID.
 
-Contains information about relationships between contracts, persons, and cultures.
-Columns: [Id] (primary key), [ContractId] (foreign key), [PersonId] (foreign key), [CultureId] (foreign key).
-F_Warehouse:
+### F_Warehouse
+- Relationships between warehouses and cultures, with ID, Warehouse ID, and Culture ID.
 
-Contains information about relationships between warehouses and cultures.
-Columns: [Id] (primary key), [Warehouse_id] (foreign key), [Cultureid] (foreign key).
-F_Orders:
+### F_Orders
+- Orders information, including ID, Contract ID, Warehouse ID, Shipment Date, Quantity, and Price.
 
-Contains information about orders.
-Columns: [Id] (primary key), [IdContracts] (foreign key), [IdWarehouse] (foreign key), [Shipment], [Quantity], [Price].
-Constraints and Data Integrity Rules:
+## Constraints and Data Integrity Rules
 
-In the Contracts table, the contract start date ([Begin]) must be at least the current date.
-In the Contracts table, the quantity ([Quantity]) must be greater than 0.
-In the Cultures table, the culture ([Culture]) must be unique and non-empty.
-In the Warehouses table, the default available quantity ([Available]) is 900,000.
-In the F_Contracts table, the composite key [ContractId, PersonId, CultureId] is unique.
-Foreign keys are used to ensure data integrity.
-Stored Procedures:
+- Contracts must have a start date ([Begin]) at least equal to the current date.
+- Quantity in Contracts must be greater than 0.
+- Cultures must have unique and non-empty names.
+- Warehouses default available space to 900,000.
+- F_Contracts enforces a unique combination of Contract ID, Person ID, and Culture ID.
 
-InsertIntoPerson: Procedure to insert a new record into the Persons table.
-InsertIntoContract: Procedure to insert a new record into the Contracts table.
-InsertIntoCulture: Procedure to insert a new record into the Cultures table.
-InsertIntoWarehouse: Procedure to insert a new record into the Warehouses table.
-InsertIntoF_Contracts: Procedure to insert a new record into the F_Contracts table.
-Triggers:
+## Stored Procedures
 
-InsertWarehouseTrigger: Trigger to update the Free column in the Warehouses table after inserting a new record.
-UpdateWarehouseTriggerRow: Trigger to check the consistency of the Occupied and Available columns in the Warehouses table after an update.
-Transactions:
+### InsertIntoPerson
+- Inserts a new employee record into the Persons table.
 
-Use transactions to ensure the atomicity of script execution.
-Security Procedures:
+### InsertIntoContract
+- Inserts a new contract record into the Contracts table.
 
-Grant appropriate access rights to database objects for different users.
+### InsertIntoCulture
+- Inserts a new culture record into the Cultures table.
+
+### InsertIntoWarehouse
+- Inserts a new warehouse record into the Warehouses table.
+
+### InsertIntoF_Contracts
+- Inserts a new relationship record into the F_Contracts table.
+
+## Triggers
+
+### InsertWarehouseTrigger
+- Updates the Free column in the Warehouses table after inserting a new record.
+
+### UpdateWarehouseTriggerRow
+- Checks the consistency of Occupied and Available columns in the Warehouses table after an update.
+
+## Transactions
+
+- Utilizes transactions to ensure the atomicity of script execution.
+
+## Security Procedures
+
+- Grants appropriate access rights to database objects for different users.
